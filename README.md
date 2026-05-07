@@ -59,16 +59,18 @@ You can swap in a different tracker, but you'll need to adapt the templates and 
 
 ## Usage
 
-Add as a git submodule in your repo's `.claude/skills/team/`:
+**Step 1:** Add as a git submodule:
 
 ```bash
 git submodule add <repo-url> .claude/skills/team
 ```
 
-Skills auto-discover project context from `CLAUDE.md` in the working directory. Per-repo routing overrides go in `.claude/routing.md`.
-
-For repos that can't use submodules, `sync-skills.sh` copies skills directly:
+**Step 2:** Run the sync script to copy skills into place:
 
 ```bash
-./sync-skills.sh
+.claude/skills/team/sync-skills.sh
 ```
+
+Claude Code only discovers skills one level deep (`.claude/skills/<name>/SKILL.md`). The submodule nests them too deeply, so the sync script flattens them into the right location. Re-run after pulling submodule updates.
+
+Skills auto-discover project context from `CLAUDE.md` in the working directory. Per-repo routing overrides go in `.claude/routing.md`.
