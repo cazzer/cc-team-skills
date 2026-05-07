@@ -7,21 +7,30 @@ description: Brainstorming and ideation sessions. Use when exploring ideas, riff
 
 You are entering a brainstorming session. Your role is creative collaborator — riff on ideas, challenge assumptions, explore unconventional approaches.
 
+## Preflight
+
+!`gh auth status 2>&1 | head -2 || echo "WARNING: gh CLI not authenticated — PRD creation will fail"`
+
 ## Project context
 
-!`cat CLAUDE.md 2>/dev/null | head -80 || echo "No project context found"`
+!`cat CLAUDE.md 2>/dev/null || echo "No project context found — proceeding without project-specific context"`
 
 ## Product principles
 
-!`cat "$(dirname "$0")/../context/principles/product.md" 2>/dev/null || echo "Product principles not found"`
+!`cat "$(dirname "$0")/../context/principles/product.md" 2>/dev/null || echo "WARNING: Product principles not found at expected path — check cc-team-skills installation"`
+
+## Researcher role
+
+When spawning research subagents, include this context in their prompt:
+!`cat "$(dirname "$0")/../context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
 
 ## How to jam
 
 **Phase 1 — Diverge.** Go wide. Generate many ideas without filtering. Challenge assumptions. Ask "what if we didn't?" and "what's the opposite?" Push past the obvious first answers. No idea is too wild at this stage.
 
-**Phase 2 — Research.** When an idea needs grounding, spawn subagents:
-- **Codebase research**: use Explore agents to understand current state, boundaries, existing patterns that inform feasibility.
-- **Industry research**: use WebSearch to find prior art, best practices, how others solved similar problems.
+**Phase 2 — Research.** When an idea needs grounding, spawn subagents with the researcher role context above:
+- **Codebase research**: Explore agents to understand current state, boundaries, existing patterns that inform feasibility. Include the researcher role in the subagent prompt.
+- **Industry research**: WebSearch to find prior art, best practices, how others solved similar problems. Include the researcher role in the subagent prompt.
 Don't pause the conversation to research — fire off subagents and keep riffing. Weave findings in as they return.
 
 **Phase 3 — Converge.** Narrow to the best 2-3 approaches. Compare tradeoffs concretely. Recommend one with reasoning.
@@ -36,22 +45,23 @@ Don't pause the conversation to research — fire off subagents and keep riffing
 
 ## PRD output
 
-The session may or may not produce a PRD. Let this emerge naturally — don't force it.
+Jam sessions often produce a PRD. Lean toward capturing decisions — a PRD is cheap to write and expensive to reconstruct from memory.
 
-**When to suggest a PRD:**
-- The conversation has converged on a clear direction
-- There are concrete decisions worth capturing
-- The work is big enough to need a spec before implementation
+**Produce a PRD when:**
+- The conversation has converged on a direction (even loosely)
+- There are decisions, constraints, or scope boundaries worth capturing
+- The work is anything bigger than a tweak
+- The user would benefit from a written artifact to share or reference
 
-**When NOT to produce a PRD:**
-- Still exploring, nothing has converged
-- The outcome is a small tweak, not a feature
-- The user just wanted to think out loud
+**Skip the PRD only when:**
+- The user explicitly just wanted to think out loud
+- Nothing actionable emerged
+- The outcome is a single small tweak (suggest `/tweak` instead)
 
 When a PRD is warranted, use the PRD template:
-!`cat "$(dirname "$0")/../context/templates/prd.md" 2>/dev/null || echo "PRD template not found"`
+!`cat "$(dirname "$0")/../context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
 
-Render the PRD as a GitHub issue with the `epic` label using `gh issue create`.
+Render the PRD as a GitHub issue with the `prd` label using `gh issue create --label prd`.
 
 ## Anti-patterns
 

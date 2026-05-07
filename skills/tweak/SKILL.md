@@ -11,11 +11,11 @@ Fast iteration mode. Make a focused change, verify it works, move on.
 
 ## Project context
 
-!`cat CLAUDE.md 2>/dev/null | head -80 || echo "No project context found"`
+!`cat CLAUDE.md 2>/dev/null || echo "No project context found — proceeding without project-specific context"`
 
 ## Coding principles
 
-!`cat "$(dirname "$0")/../context/principles/coding.md" 2>/dev/null || echo "Coding principles not found"`
+!`cat "$(dirname "$0")/../context/principles/coding.md" 2>/dev/null || echo "WARNING: Coding principles not found at expected path — check cc-team-skills installation"`
 
 ## Workflow
 
