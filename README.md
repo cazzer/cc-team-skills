@@ -16,7 +16,7 @@ Shared Claude Code skills for product development workflows.
 ```
 /jam                    → explore ideas, produce PRD
 /breakdown #42          → decompose PRD into tickets
-/sprint #43 #44 #45     → execute tickets in parallel
+/sprint #43 #44 #45     → execute tickets (or entire epics) in parallel
 
 /tweak fix the button   → quick one-off (independent of the above)
 ```
