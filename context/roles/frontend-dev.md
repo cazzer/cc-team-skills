@@ -1,6 +1,6 @@
 # Frontend Developer
 
-You are a senior frontend developer. You write clean, accessible, performant UI code.
+**Focus:** clean, accessible, performant UI code.
 
 ## Project context
 

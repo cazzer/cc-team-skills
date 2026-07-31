@@ -2,7 +2,6 @@
 name: breakdown
 description: Decompose a PRD or epic into implementable tickets, or produce a PRD from loose ideas. Takes a GitHub issue number or works from conversation context. Deep codebase research, dependency ordering, surface tagging.
 argument-hint: [#issue-number]
-disable-model-invocation: true
 ---
 
 # Breakdown
@@ -11,7 +10,7 @@ Assess input, produce a PRD if needed, then decompose into the smallest reasonab
 
 ## Preflight
 
-!`gh auth status 2>&1 | head -2 || echo "WARNING: gh CLI not authenticated — issue creation will fail"`
+!`gh auth status >/dev/null 2>&1 && echo "MODE: gh CLI (authenticated) — use gh for all issue/PR ops." || echo "MODE: GitHub MCP — gh is unavailable or unauthenticated. This is NORMAL in a cloud session and is NOT a failure: use the GitHub MCP tools for every issue/PR read and write, and treat any gh command in this skill as a spec of intent, not a literal command. Find the tools with ToolSearch (query: \"github issue pr comment\") to load their schemas before calling. If NEITHER gh nor GitHub MCP is available, report that plainly — never silently skip an issue/PR step."`
 
 ## Project context
 
@@ -20,23 +19,47 @@ Assess input, produce a PRD if needed, then decompose into the smallest reasonab
 ## Researcher role
 
 When spawning research subagents, include this context in their prompt:
-!`cat "$(dirname "$0")/../context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
+!`cat .claude/skills/context/roles/researcher.md 2>/dev/null || cat "$HOME/.claude/skills/context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
+
+## Skill handoffs
+
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
+
+## Subagent task spec
+
+Build every subagent prompt from the four-part delegation contract below (objective / output format / tools & sources / boundaries). Carry prior decisions forward; scale effort to the work.
+
+!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
 
 ## Routing table
 
-!`cat "$(dirname "$0")/../context/routing/defaults.md" 2>/dev/null || echo "WARNING: Routing defaults not found — agent routing will fall back to best judgment"`
+!`cat .claude/skills/context/routing/defaults.md 2>/dev/null || cat "$HOME/.claude/skills/context/routing/defaults.md" 2>/dev/null || echo "WARNING: Routing defaults not found — agent routing will fall back to best judgment"`
 
 ## Surface detection
 
-!`cat "$(dirname "$0")/../context/routing/surfaces.md" 2>/dev/null || echo "WARNING: Surface detection not found"`
+!`cat .claude/skills/context/routing/surfaces.md 2>/dev/null || cat "$HOME/.claude/skills/context/routing/surfaces.md" 2>/dev/null || echo "WARNING: Surface detection not found"`
+
+## Subagent mapping (per-repo — required)
+
+!`cat .claude/routing.md 2>/dev/null || echo "No routing table — use the baked-in role profiles in context/roles/ (the default). Optionally run /setup-agents to layer wshobson plugin agents on top."`
+
+## Installed plugins (staleness check)
+
+!`cat ~/.claude/plugins/installed_plugins.json 2>/dev/null | python3 -c "import json,sys; d=json.load(sys.stdin); print('\n'.join(sorted({k.split('@')[0] for k in d.get('plugins',{})})))" 2>/dev/null || echo "(could not read installed plugins)"`
+
+## Routing enforcement
+
+**Routing — baked-in role profiles are the default.** No routing table, or a table whose slots are all `—`, is normal — not an error; tickets still route by their surface tags, which `/sprint` and `/focus` resolve to a local role profile (`context/roles/<slot>.md`). Plugins are an optional enhancement layered by `/setup-agents`. Never hard-stop for a missing table — proceed and decompose.
+
+If a routing table is present, cross-check its "Required plugins" list against the Installed plugins list above and warn once on any missing plugin (run /setup-agents to install). Use the surface tags you apply to tickets so the downstream routing table resolves each to a subagent.
 
 ## Templates
 
 PRD template:
-!`cat "$(dirname "$0")/../context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
+!`cat .claude/skills/context/templates/prd.md 2>/dev/null || cat "$HOME/.claude/skills/context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
 
 Ticket template:
-!`cat "$(dirname "$0")/../context/templates/ticket.md" 2>/dev/null || echo "WARNING: Ticket template not found"`
+!`cat .claude/skills/context/templates/ticket.md 2>/dev/null || cat "$HOME/.claude/skills/context/templates/ticket.md" 2>/dev/null || echo "WARNING: Ticket template not found"`
 
 ## Workflow
 
@@ -136,10 +159,11 @@ Create each ticket as a GitHub issue using `gh issue create` with appropriate `-
 
 Present a final summary: ticket count, dependency graph, estimated parallelization (e.g. "3 tickets can run in parallel after the DB migration lands").
 
-## Repo-specific overrides
-
-Check for routing overrides:
-!`cat .claude/routing.md 2>/dev/null || cat .claude/skills/team/routing-overrides.md 2>/dev/null || echo "No routing overrides found — using defaults"`
+**Hand it forward.** Close by naming the executor (per the handoff map):
+- Multiple tickets → suggest `/sprint` to batch-execute the waves.
+- It collapsed to a single ticket → suggest `/focus`.
+- Either way, `/drive` can take it from here and route automatically.
+Name the next skill and stop — breakdown produces tickets, it doesn't execute them.
 
 ## Anti-patterns
 

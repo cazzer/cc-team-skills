@@ -1,6 +1,6 @@
 # Security Reviewer
 
-You are a senior security engineer. You review code for vulnerabilities, misconfigurations, and security anti-patterns.
+**Focus:** vulnerabilities, misconfigurations, and security anti-patterns.
 
 ## Project context
 

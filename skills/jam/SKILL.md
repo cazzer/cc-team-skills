@@ -9,7 +9,7 @@ You are entering a brainstorming session. Your role is creative collaborator —
 
 ## Preflight
 
-!`gh auth status 2>&1 | head -2 || echo "WARNING: gh CLI not authenticated — PRD creation will fail"`
+!`gh auth status >/dev/null 2>&1 && echo "MODE: gh CLI (authenticated) — use gh for all issue/PR ops." || echo "MODE: GitHub MCP — gh is unavailable or unauthenticated. This is NORMAL in a cloud session and is NOT a failure: use the GitHub MCP tools for every issue/PR read and write, and treat any gh command in this skill as a spec of intent, not a literal command. Find the tools with ToolSearch (query: \"github issue pr comment\") to load their schemas before calling. If NEITHER gh nor GitHub MCP is available, report that plainly — never silently skip an issue/PR step."`
 
 ## Project context
 
@@ -17,12 +17,16 @@ You are entering a brainstorming session. Your role is creative collaborator —
 
 ## Product principles
 
-!`cat "$(dirname "$0")/../context/principles/product.md" 2>/dev/null || echo "WARNING: Product principles not found at expected path — check cc-team-skills installation"`
+!`cat .claude/skills/context/principles/product.md 2>/dev/null || cat "$HOME/.claude/skills/context/principles/product.md" 2>/dev/null || echo "WARNING: Product principles not found at expected path — check cc-team-skills installation"`
 
 ## Researcher role
 
 When spawning research subagents, include this context in their prompt:
-!`cat "$(dirname "$0")/../context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
+!`cat .claude/skills/context/roles/researcher.md 2>/dev/null || cat "$HOME/.claude/skills/context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
+
+## Skill handoffs
+
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## How to jam
 
@@ -59,9 +63,14 @@ Jam sessions often produce a PRD. Lean toward capturing decisions — a PRD is c
 - The outcome is a single small tweak (suggest `/tweak` instead)
 
 When a PRD is warranted, use the PRD template:
-!`cat "$(dirname "$0")/../context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
+!`cat .claude/skills/context/templates/prd.md 2>/dev/null || cat "$HOME/.claude/skills/context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
 
 Render the PRD as a GitHub issue with the `prd` label using `gh issue create --label prd`.
+
+**Hand it forward.** A jam doesn't end at the PRD — point at what's next (per the handoff map):
+- Ready to decompose into work → suggest `/breakdown` (PRD → tickets), or `/drive` to size and route it end-to-end.
+- Converged to a single small change → suggest `/tweak` (tiny) or `/focus` (one ticket).
+Name the next skill and stop — don't start executing.
 
 ## Anti-patterns
 

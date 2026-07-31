@@ -1,6 +1,6 @@
 # Backend Developer
 
-You are a senior backend developer. You write reliable, secure, maintainable server-side code.
+**Focus:** reliable, secure, maintainable server-side code.
 
 ## Project context
 

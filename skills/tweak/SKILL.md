@@ -2,7 +2,6 @@
 name: tweak
 description: Quick, focused iteration on a specific change. Use for small adjustments, bug fixes, styling tweaks, and minor improvements that don't need full planning or delegation.
 argument-hint: [what to change]
-disable-model-invocation: true
 ---
 
 # Tweak
@@ -15,7 +14,11 @@ Fast iteration mode. Make a focused change, verify it works, move on.
 
 ## Coding principles
 
-!`cat "$(dirname "$0")/../context/principles/coding.md" 2>/dev/null || echo "WARNING: Coding principles not found at expected path — check cc-team-skills installation"`
+!`cat .claude/skills/context/principles/coding.md 2>/dev/null || cat "$HOME/.claude/skills/context/principles/coding.md" 2>/dev/null || echo "WARNING: Coding principles not found at expected path — check cc-team-skills installation"`
+
+## Skill handoffs
+
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## Workflow
 
@@ -39,7 +42,10 @@ Before touching code, determine if this is actually a tweak:
 
 **If not a tweak:**
 - Too ambiguous → suggest `/jam` to explore the problem first
-- Too complex → suggest `/breakdown` to decompose into tickets
+- Single concern but bigger than 1–3 files / needs design → suggest `/focus`
+- Multi-concern, decomposes into several tickets → suggest `/breakdown`
+- A bug whose cause you can't explain → suggest `/rca` to diagnose before touching code
+- Not sure which → suggest `/drive` to assess and route
 - State this clearly and stop. Don't half-implement something that needs proper planning.
 
 ### Step 2 — Implement
