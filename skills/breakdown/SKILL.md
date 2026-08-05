@@ -19,25 +19,25 @@ Assess input, produce a PRD if needed, then decompose into the smallest reasonab
 ## Researcher role
 
 When spawning research subagents, include this context in their prompt:
-!`cat .claude/skills/context/roles/researcher.md 2>/dev/null || cat "$HOME/.claude/skills/context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
+!`cat .claude/skills/context/roles/researcher.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/roles/researcher.md" 2>/dev/null || cat "$HOME/.claude/skills/context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
 
 ## Skill handoffs
 
-!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/handoffs.md" 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## Subagent task spec
 
 Build every subagent prompt from the four-part delegation contract below (objective / output format / tools & sources / boundaries). Carry prior decisions forward; scale effort to the work.
 
-!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
+!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/spawn-spec.md" 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
 
 ## Routing table
 
-!`cat .claude/skills/context/routing/defaults.md 2>/dev/null || cat "$HOME/.claude/skills/context/routing/defaults.md" 2>/dev/null || echo "WARNING: Routing defaults not found — agent routing will fall back to best judgment"`
+!`cat .claude/skills/context/routing/defaults.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/routing/defaults.md" 2>/dev/null || cat "$HOME/.claude/skills/context/routing/defaults.md" 2>/dev/null || echo "WARNING: Routing defaults not found — agent routing will fall back to best judgment"`
 
 ## Surface detection
 
-!`cat .claude/skills/context/routing/surfaces.md 2>/dev/null || cat "$HOME/.claude/skills/context/routing/surfaces.md" 2>/dev/null || echo "WARNING: Surface detection not found"`
+!`cat .claude/skills/context/routing/surfaces.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/routing/surfaces.md" 2>/dev/null || cat "$HOME/.claude/skills/context/routing/surfaces.md" 2>/dev/null || echo "WARNING: Surface detection not found"`
 
 ## Subagent mapping (per-repo — required)
 
@@ -56,10 +56,10 @@ If a routing table is present, cross-check its "Required plugins" list against t
 ## Templates
 
 PRD template:
-!`cat .claude/skills/context/templates/prd.md 2>/dev/null || cat "$HOME/.claude/skills/context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
+!`cat .claude/skills/context/templates/prd.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/templates/prd.md" 2>/dev/null || cat "$HOME/.claude/skills/context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
 
 Ticket template:
-!`cat .claude/skills/context/templates/ticket.md 2>/dev/null || cat "$HOME/.claude/skills/context/templates/ticket.md" 2>/dev/null || echo "WARNING: Ticket template not found"`
+!`cat .claude/skills/context/templates/ticket.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/templates/ticket.md" 2>/dev/null || cat "$HOME/.claude/skills/context/templates/ticket.md" 2>/dev/null || echo "WARNING: Ticket template not found"`
 
 ## Workflow
 

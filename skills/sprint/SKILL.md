@@ -18,17 +18,17 @@ Batch executor. Pick up tickets and run them through full plan → implement →
 
 ## Skill handoffs
 
-!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/handoffs.md" 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## Subagent task spec
 
 Build every subagent prompt from the four-part delegation contract below (objective / output format / tools & sources / boundaries). Carry prior decisions forward; scale effort to the work.
 
-!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
+!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/spawn-spec.md" 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
 
 ## Routing table
 
-!`cat .claude/skills/context/routing/defaults.md 2>/dev/null || cat "$HOME/.claude/skills/context/routing/defaults.md" 2>/dev/null || echo "WARNING: Routing defaults not found — agent routing will fall back to best judgment"`
+!`cat .claude/skills/context/routing/defaults.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/routing/defaults.md" 2>/dev/null || cat "$HOME/.claude/skills/context/routing/defaults.md" 2>/dev/null || echo "WARNING: Routing defaults not found — agent routing will fall back to best judgment"`
 
 ## Subagent mapping (per-repo — required)
 

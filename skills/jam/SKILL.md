@@ -17,16 +17,16 @@ You are entering a brainstorming session. Your role is creative collaborator —
 
 ## Product principles
 
-!`cat .claude/skills/context/principles/product.md 2>/dev/null || cat "$HOME/.claude/skills/context/principles/product.md" 2>/dev/null || echo "WARNING: Product principles not found at expected path — check cc-team-skills installation"`
+!`cat .claude/skills/context/principles/product.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/principles/product.md" 2>/dev/null || cat "$HOME/.claude/skills/context/principles/product.md" 2>/dev/null || echo "WARNING: Product principles not found at expected path — check cc-team-skills installation"`
 
 ## Researcher role
 
 When spawning research subagents, include this context in their prompt:
-!`cat .claude/skills/context/roles/researcher.md 2>/dev/null || cat "$HOME/.claude/skills/context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
+!`cat .claude/skills/context/roles/researcher.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/roles/researcher.md" 2>/dev/null || cat "$HOME/.claude/skills/context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
 
 ## Skill handoffs
 
-!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/handoffs.md" 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## How to jam
 
@@ -63,7 +63,7 @@ Jam sessions often produce a PRD. Lean toward capturing decisions — a PRD is c
 - The outcome is a single small tweak (suggest `/tweak` instead)
 
 When a PRD is warranted, use the PRD template:
-!`cat .claude/skills/context/templates/prd.md 2>/dev/null || cat "$HOME/.claude/skills/context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
+!`cat .claude/skills/context/templates/prd.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/templates/prd.md" 2>/dev/null || cat "$HOME/.claude/skills/context/templates/prd.md" 2>/dev/null || echo "WARNING: PRD template not found"`
 
 Render the PRD as a GitHub issue with the `prd` label using `gh issue create --label prd`.
 

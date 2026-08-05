@@ -14,11 +14,11 @@ Fast iteration mode. Make a focused change, verify it works, move on.
 
 ## Coding principles
 
-!`cat .claude/skills/context/principles/coding.md 2>/dev/null || cat "$HOME/.claude/skills/context/principles/coding.md" 2>/dev/null || echo "WARNING: Coding principles not found at expected path — check cc-team-skills installation"`
+!`cat .claude/skills/context/principles/coding.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/principles/coding.md" 2>/dev/null || cat "$HOME/.claude/skills/context/principles/coding.md" 2>/dev/null || echo "WARNING: Coding principles not found at expected path — check cc-team-skills installation"`
 
 ## Skill handoffs
 
-!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/handoffs.md" 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## Workflow
 

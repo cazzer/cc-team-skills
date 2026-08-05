@@ -42,6 +42,9 @@ The handoff map in `context/handoffs.md` is loaded by every skill, so each one k
 ## Structure
 
 ```
+.claude-plugin/
+  plugin.json    → plugin manifest
+  marketplace.json → self-hosted marketplace entry
 skills/          → SKILL.md files invoked by Claude Code
 context/
   handoffs.md    → which skill hands off to which, and when
@@ -53,20 +56,6 @@ context/
 ```
 
 Role profiles are one-line **Focus:** statements plus directive bodies — they set a lens, not a persona. `context/spawn-spec.md` supplies the task shape (objective / output format / tools & sources / boundaries) that every spawn is built from.
-
-## Why a submodule and not a plugin?
-
-Claude Code plugins (`~/.claude/plugins/`) are machine-local — they only work on desktop and CLI. Skills in `.claude/skills/` live in the repo and work on every client: mobile, web, CLI, and IDE extensions.
-
-This repo is designed as a submodule so your team's workflows are available everywhere, not just on machines where someone remembered to install a plugin.
-
-| | Plugin | Skill (submodule) |
-|---|---|---|
-| Mobile | No | Yes |
-| Web | No | Yes |
-| CLI / IDE | Yes | Yes |
-| Per-repo versioning | No | Yes (pinned commit) |
-| Requires local install | Yes | No |
 
 ## Why GitHub Issues?
 
@@ -81,22 +70,39 @@ You can swap in a different tracker, but you'll need to adapt the templates and 
 
 In cloud sessions where `gh` isn't authenticated, the skills fall back to the GitHub MCP tools automatically.
 
-## Usage
+## Install
 
-**Step 1:** Add as a git submodule:
+This repo is a Claude Code plugin and hosts its own marketplace.
 
-```bash
-git submodule add <repo-url> .claude/skills/team
+```
+/plugin marketplace add cazzer/cc-team-skills
+/plugin install cc-team-skills@cc-team-skills
 ```
 
-**Step 2:** Run the sync script to copy skills into place:
+Update later with `/plugin marketplace update cc-team-skills`.
+
+**Optional:** run `/setup-agents` if you want wshobson plugin agents layered on top of the baked-in role profiles. Skip it and everything still works.
+
+### Mobile and web
+
+Plugins are machine-local — they load on CLI, desktop, and IDE extensions, but **not** on mobile or claude.ai/code. Those clients only see skills committed into the repo at `.claude/skills/<name>/SKILL.md`.
+
+To cover them, vendor the skills into the project:
 
 ```bash
-.claude/skills/team/sync-skills.sh
+git clone --depth 1 https://github.com/cazzer/cc-team-skills.git /tmp/cc-team-skills
+rsync -a --delete /tmp/cc-team-skills/skills/ .claude/skills/
+rsync -a --delete /tmp/cc-team-skills/context/ .claude/skills/context/
 ```
 
-Claude Code only discovers skills one level deep (`.claude/skills/<name>/SKILL.md`). The submodule nests them too deeply, so the sync script flattens them into the right location. Re-run after pulling submodule updates.
+Commit the result and re-run after pulling updates. Don't do both on the same repo — a vendored copy shadows the plugin (see resolution order below).
 
-Skills auto-discover project context from `CLAUDE.md` in the working directory. They resolve their shared context from `.claude/skills/context/` and fall back to `~/.claude/skills/context/`, so a user-scope install works too.
+### Context resolution
 
-**Step 3 (optional):** Run `/setup-agents` if you want plugin agents layered on top of the baked-in role profiles. Skip it and everything still works.
+Skills auto-discover project context from `CLAUDE.md` in the working directory. Shared context resolves in this order, first hit wins:
+
+1. `.claude/skills/context/` — vendored or per-repo override
+2. `${CLAUDE_PLUGIN_ROOT}/context/` — this plugin
+3. `~/.claude/skills/context/` — user-scope install
+
+So a repo can override a single role profile or principles file by dropping it at path 1 without forking the plugin.

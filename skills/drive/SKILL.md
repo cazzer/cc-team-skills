@@ -18,17 +18,17 @@ You are the program manager. A request comes in; you assess it, lay out the plan
 
 ## PM role
 
-!`cat .claude/skills/context/roles/pm.md 2>/dev/null || cat "$HOME/.claude/skills/context/roles/pm.md" 2>/dev/null || echo "WARNING: PM role not found at expected path — check skills installation"`
+!`cat .claude/skills/context/roles/pm.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/roles/pm.md" 2>/dev/null || cat "$HOME/.claude/skills/context/roles/pm.md" 2>/dev/null || echo "WARNING: PM role not found at expected path — check skills installation"`
 
 ## Skill handoffs (the graph you route over)
 
-!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/handoffs.md" 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## Subagent task spec
 
 Build every subagent prompt from the four-part delegation contract below (objective / output format / tools & sources / boundaries). Carry prior decisions forward; scale effort to the work.
 
-!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
+!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/spawn-spec.md" 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
 
 ## Routing table (needed only if the route reaches breakdown/focus/sprint)
 

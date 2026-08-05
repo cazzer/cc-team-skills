@@ -18,11 +18,11 @@ You are running a root cause investigation. Your job is to understand *why* a pr
 
 ## Researcher role (inject into research subagents)
 
-!`cat .claude/skills/context/roles/researcher.md 2>/dev/null || cat "$HOME/.claude/skills/context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
+!`cat .claude/skills/context/roles/researcher.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/roles/researcher.md" 2>/dev/null || cat "$HOME/.claude/skills/context/roles/researcher.md" 2>/dev/null || echo "WARNING: Researcher role not found"`
 
 ## Skill handoffs
 
-!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/handoffs.md" 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## Subagent mapping (resolve investigator slots)
 

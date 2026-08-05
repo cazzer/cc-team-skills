@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "cc-team-skills",
+  "description": "Shared Claude Code skills for product development workflows.",
+  "owner": {
+    "name": "Caleb Brewer",
+    "url": "https://github.com/cazzer"
+  },
+  "plugins": [
+    {
+      "name": "cc-team-skills",
+      "description": "Product development workflow skills: jam, tweak, rca, focus, breakdown, sprint, drive.",
+      "source": "./",
+      "category": "workflow"
+    }
+  ]
+}

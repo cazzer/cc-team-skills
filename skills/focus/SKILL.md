@@ -14,21 +14,21 @@ Sequential pipeline for one focused change. Subagent handoffs preserve context a
 
 ## Coding principles
 
-!`cat .claude/skills/context/principles/coding.md 2>/dev/null || cat "$HOME/.claude/skills/context/principles/coding.md" 2>/dev/null || echo "WARNING: Coding principles not found at expected path"`
+!`cat .claude/skills/context/principles/coding.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/principles/coding.md" 2>/dev/null || cat "$HOME/.claude/skills/context/principles/coding.md" 2>/dev/null || echo "WARNING: Coding principles not found at expected path"`
 
 ## Skill handoffs
 
-!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
+!`cat .claude/skills/context/handoffs.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/handoffs.md" 2>/dev/null || cat "$HOME/.claude/skills/context/handoffs.md" 2>/dev/null || echo "WARNING: Handoff map not found at expected path"`
 
 ## Subagent task spec
 
 Build every subagent prompt from the four-part delegation contract below (objective / output format / tools & sources / boundaries). Carry prior decisions forward; scale effort to the work.
 
-!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
+!`cat .claude/skills/context/spawn-spec.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/spawn-spec.md" 2>/dev/null || cat "$HOME/.claude/skills/context/spawn-spec.md" 2>/dev/null || echo "WARNING: Subagent task spec not found at expected path"`
 
 ## Routing table
 
-!`cat .claude/skills/context/routing/defaults.md 2>/dev/null || cat "$HOME/.claude/skills/context/routing/defaults.md" 2>/dev/null || echo "WARNING: Routing defaults not found"`
+!`cat .claude/skills/context/routing/defaults.md 2>/dev/null || cat "${CLAUDE_PLUGIN_ROOT}/context/routing/defaults.md" 2>/dev/null || cat "$HOME/.claude/skills/context/routing/defaults.md" 2>/dev/null || echo "WARNING: Routing defaults not found"`
 
 ## Subagent mapping (per-repo — required)
 
