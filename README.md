@@ -8,33 +8,35 @@ Ordered simplest first — roughly the order you'd reach for them as a change ge
 
 | Skill | Invoke | Purpose |
 |---|---|---|
-| **jam** | `/jam` | Brainstorm a fuzzy idea. Diverge then converge. May produce a PRD. Conversation only — no code. |
-| **tweak** | `/tweak [change]` | Tiny surgical change (1–3 files, no design). Scope-checks first and exits if it's bigger. |
-| **rca** | `/rca [what's broken]` | Diagnose an unknown-cause bug. Parallel read-only investigators → verified root cause + remediation plan. Never implements. |
-| **focus** | `/focus [change \| #issue]` | One ticket end-to-end: plan → implement → review, routed subagents in a worktree. |
-| **breakdown** | `/breakdown [#issue]` | PRD/epic → ordered, routable tickets. Deep research, dependency graph, surface tagging. |
-| **sprint** | `/sprint [#issues \| milestone]` | Batch-execute tickets in parallel waves, respecting dependency order. |
-| **drive** | `/drive [#issue \| request]` | Front door. Assesses cause/scope/ambiguity, then routes the request through the minimal chain of the above and drives it to done. |
+| **jam** | `/team:jam` | Brainstorm a fuzzy idea. Diverge then converge. May produce a PRD. Conversation only — no code. |
+| **tweak** | `/team:tweak [change]` | Tiny surgical change (1–3 files, no design). Scope-checks first and exits if it's bigger. |
+| **rca** | `/team:rca [what's broken]` | Diagnose an unknown-cause bug. Parallel read-only investigators → verified root cause + remediation plan. Never implements. |
+| **focus** | `/team:focus [change \| #issue]` | One ticket end-to-end: plan → implement → review, routed subagents in a worktree. |
+| **breakdown** | `/team:breakdown [#issue]` | PRD/epic → ordered, routable tickets. Deep research, dependency graph, surface tagging. |
+| **sprint** | `/team:sprint [#issues \| milestone]` | Batch-execute tickets in parallel waves, respecting dependency order. |
+| **drive** | `/team:drive [#issue \| request]` | Front door. Assesses cause/scope/ambiguity, then routes the request through the minimal chain of the above and drives it to done. |
 
 Plus one setup skill:
 
 | Skill | Invoke | Purpose |
 |---|---|---|
-| **setup-agents** | `/setup-agents` | **Optional.** Baked-in role profiles work with no setup. Run this only to layer wshobson plugin agents on top — detects stack, installs plugins at project scope, writes `.claude/routing.md`. Idempotent. |
+| **setup-agents** | `/team:setup-agents` | **Optional.** Baked-in role profiles work with no setup. Run this only to layer wshobson plugin agents on top — detects stack, installs plugins at project scope, writes `.claude/routing.md`. Idempotent. |
+
+The `team:` prefix is the plugin namespace. Vendored into a repo or installed user-scope, the names are bare — `/jam`, `/drive`.
 
 ## Typical flow
 
 ```
-/drive add dark mode      → assesses and routes the whole chain itself
+/team:drive add dark mode   → assesses and routes the whole chain itself
 
 # or drive it by hand:
-/jam                      → explore ideas, produce PRD
-/breakdown #42            → decompose PRD into tickets
-/sprint #43 #44 #45       → execute tickets (or entire epics) in parallel
-/focus #43                → or run a single ticket
+/team:jam                   → explore ideas, produce PRD
+/team:breakdown #42         → decompose PRD into tickets
+/team:sprint #43 #44 #45    → execute tickets (or entire epics) in parallel
+/team:focus #43             → or run a single ticket
 
-/tweak fix the button     → quick one-off
-/rca checkout 500s        → diagnose before fixing anything
+/team:tweak fix the button  → quick one-off
+/team:rca checkout 500s     → diagnose before fixing anything
 ```
 
 The handoff map in `context/handoffs.md` is loaded by every skill, so each one knows what it consumes and what it hands off to.
@@ -59,7 +61,7 @@ Role profiles are one-line **Focus:** statements plus directive bodies — they 
 
 ## Why GitHub Issues?
 
-These skills use GitHub Issues as the connective tissue between stages. `/jam` produces a PRD issue, `/breakdown` decomposes it into ticket issues, `/sprint` executes those tickets.
+These skills use GitHub Issues as the connective tissue between stages. `/team:jam` produces a PRD issue, `/team:breakdown` decomposes it into ticket issues, `/team:sprint` executes those tickets.
 
 Two reasons:
 
@@ -76,12 +78,12 @@ This repo is a Claude Code plugin and hosts its own marketplace.
 
 ```
 /plugin marketplace add cazzer/cc-team-skills
-/plugin install cc-team-skills@cc-team-skills
+/plugin install team@cc-team-skills
 ```
 
-Update later with `/plugin marketplace update cc-team-skills`.
+The marketplace is named after the repo; the plugin inside it is named `team`, which is where the `/team:` prefix on every skill comes from. Update later with `/plugin marketplace update cc-team-skills`.
 
-**Optional:** run `/setup-agents` if you want wshobson plugin agents layered on top of the baked-in role profiles. Skip it and everything still works.
+**Optional:** run `/team:setup-agents` if you want wshobson plugin agents layered on top of the baked-in role profiles. Skip it and everything still works.
 
 ### Mobile and web
 
@@ -94,6 +96,8 @@ git clone --depth 1 https://github.com/cazzer/cc-team-skills.git /tmp/cc-team-sk
 rsync -a --delete /tmp/cc-team-skills/skills/ .claude/skills/
 rsync -a --delete /tmp/cc-team-skills/context/ .claude/skills/context/
 ```
+
+Vendored skills are **not** namespaced — they invoke as `/jam`, `/drive`, without the `team:` prefix.
 
 Commit the result and re-run after pulling updates. Don't do both on the same repo — a vendored copy shadows the plugin (see resolution order below).
 

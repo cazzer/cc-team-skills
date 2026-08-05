@@ -1,5 +1,5 @@
 {
-  "name": "cc-team-skills",
+  "name": "team",
   "description": "Product development workflow skills: jam, tweak, rca, focus, breakdown, sprint, drive. Routed subagents, shared role profiles, GitHub Issues as the connective tissue between stages.",
   "version": "1.0.0",
   "author": {
@@ -8,5 +8,11 @@
   },
   "homepage": "https://github.com/cazzer/cc-team-skills",
   "repository": "https://github.com/cazzer/cc-team-skills",
-  "keywords": ["workflow", "skills", "subagents", "planning", "code-review"]
+  "keywords": [
+    "workflow",
+    "skills",
+    "subagents",
+    "planning",
+    "code-review"
+  ]
 }

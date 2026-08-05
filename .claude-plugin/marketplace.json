@@ -8,7 +8,7 @@
   },
   "plugins": [
     {
-      "name": "cc-team-skills",
+      "name": "team",
       "description": "Product development workflow skills: jam, tweak, rca, focus, breakdown, sprint, drive.",
       "source": "./",
       "category": "workflow"

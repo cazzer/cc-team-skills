@@ -2,6 +2,12 @@
 
 Canonical map of the workflow skills and when to move between them. Every skill injects this so each stays aware of the whole set. Keep handoff logic here — don't re-derive it per skill.
 
+## Skill names
+
+Skills are named bare below (`/focus`). Installed as the `team` plugin they are namespaced — `/team:focus`, `/team:drive`, and so on. Vendored into a repo's `.claude/skills/` or a user-scope `~/.claude/skills/`, they stay bare.
+
+**Use whichever form appears in your skill listing**, both when suggesting a next step to the user and when invoking a sibling skill. Never invoke a name that isn't in the listing.
+
 ## The skills
 
 - **/jam** — brainstorm a fuzzy idea → PRD. Diverge then converge.
